@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}О сайте - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>О сайте</h1>
+
+    <div class="student-card">
+        <h2>Сайт студентов</h2>
+        <p>Этот сайт создан для демонстрации работы Flask - микрофреймворка для веб-разработки на Python.</p>
+
+        <h3>Функционал:</h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Просмотр списка студентов</li>
+            <li>Добавление новых студентов через форму</li>
+            <li>Простая и понятная навигация</li>
+            <li>Адаптивный дизайн</li>
+        </ul>
+
+        <h3>Технологии:</h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Python 3</li>
+            <li>Flask</li>
+            <li>HTML/CSS</li>
+            <li>Jinja2 шаблоны</li>
+        </ul>
+
+        <h3>Как использовать:</h3>
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Перейдите на главную страницу, чтобы увидеть список студентов</li>
+            <li>Нажмите "Добавить студента" для добавления нового студента</li>
+            <li>Заполните форму и отправьте данные</li>
+        </ol>
+    </div>
+
+    <div class="actions">
+        <a href="/" class="btn">На главную</a>
+        <a href="/add" class="btn btn-secondary">Добавить студента</a>
+    </div>
+{% endblock %}

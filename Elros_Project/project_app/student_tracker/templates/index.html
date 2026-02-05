@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>Список студентов</h1>
+    <p>Всего студентов: {{ students|length }}</p>
+
+    {% if search_query or selected_group %}
+        <div class="alert" style="background-color: #e0ddf9; color: #5a4fcf; margin: 1rem 0;">
+            <strong>Фильтры:</strong>
+            {% if search_query %}Поиск: "{{ search_query }}"{% endif %}
+            {% if selected_group %} | Группа: "{{ selected_group }}"{% endif %}
+            <a href="/" style="float: right; color: #5a4fcf;">Сбросить фильтры</a>
+        </div>
+    {% endif %}
+
+    <div class="search-form" style="margin: 1.5rem 0; padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(90, 79, 207, 0.1);">
+        <form method="GET" action="/" style="display: flex; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1;">
+                <label for="search" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #5a4fcf;">Поиск по имени:</label>
+                <input type="text" id="search" name="search"
+                       placeholder="Введите имя для поиска..."
+                       value="{{ search_query if search_query else '' }}"
+                       style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+
+            <div style="width: 200px;">
+                <label for="group_filter" style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #5a4fcf;">Фильтр по группе:</label>
+                <select id="group_filter" name="group" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="">Все группы</option>
+                    {% for group in all_groups %}
+                        <option value="{{ group }}" {% if selected_group == group %}selected{% endif %}>{{ group }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="btn" style="background-color: #10b981;">Применить</button>
+                <a href="/" class="btn btn-secondary">Сбросить</a>
+            </div>
+        </form>
+    </div>
+
+    {% if students %}
+        <div class="student-list">
+            {% for student in students %}
+                <div class="student-card">
+                    <h3>{{ student.name }}</h3>
+                    <p><strong>Возраст:</strong> {{ student.age }} лет</p>
+                    <p><strong>ID:</strong> {{ student.id }}</p>
+                    <p><strong>Группа:</strong> {{ student.group if student.group else 'Не указана' }}</p>
+                    <p><strong>Добавлен:</strong>
+                        {% if student.created_at is string %}
+                            {{ student.created_at[:10] }}
+                        {% else %}
+                            {{ student.created_at.strftime('%d.%m.%Y %H:%M') }}
+                        {% endif %}
+                    </p>
+                    <div class="actions">
+                        <a href="/edit/{{ student.id }}" class="btn" style="background-color: #f59e0b;">Редактировать</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert">
+            <p>Пока нет студентов. <a href="/add">Добавьте первого!</a></p>
+        </div>
+    {% endif %}
+
+    <div class="actions">
+        <a href="/add" class="btn">Добавить студента</a>
+        <a href="/students" class="btn btn-secondary">Таблица студентов</a>
+        <a href="/export/csv" class="btn" style="background-color: #10b981;">Экспорт в CSV</a>
+    </div>
+{% endblock %}

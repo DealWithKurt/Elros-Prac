@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>Список студентов</h1>
+    <p>Всего студентов: {{ students|length }}</p>
+    
+    {% if students %}
+        <div class="student-list">
+            {% for student in students %}
+                <div class="student-card">
+                    <h3>{{ student.name }}</h3>
+                    <p><strong>Возраст:</strong> {{ student.age }} лет</p>
+                    <p><strong>ID:</strong> {{ student.id }}</p>
+                    <p><strong>Добавлен:</strong> {{ student.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert">
+            <p>Пока нет студентов. <a href="/add">Добавьте первого!</a></p>
+        </div>
+    {% endif %}
+    
+    <div class="actions">
+        <a href="/add" class="btn">Добавить студента</a>
+    </div>
+{% endblock %}

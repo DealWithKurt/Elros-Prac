@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Таблица студентов - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>Таблица студентов</h1>
+    <p>Всего студентов: {{ students|length }}</p>
+
+    <div class="actions">
+        <a href="/" class="btn btn-secondary">Вернуться на главную</a>
+        <a href="/add" class="btn">Добавить студента</a>
+    </div>
+
+    {% if students %}
+        <div style="overflow-x: auto; margin-top: 2rem;">
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                <thead>
+                    <tr style="background-color: #5a4fcf; color: white;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">ID</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Имя</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Возраст</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Дата добавления</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr style="border-bottom: 1px solid #ddd; {% if loop.index % 2 == 0 %}background-color: #f8f7ff;{% endif %}">
+<td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">{{ student.id }}</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">{{ student.name }}</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">{{ student.age }} лет</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            {% if student.created_at is string %}
+                                {{ student.created_at }}
+                            {% else %}
+                                {{ student.created_at.strftime('%d.%m.%Y %H:%M:%S') }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert">
+            <p>Пока нет студентов. <a href="/add">Добавьте первого!</a></p>
+        </div>
+    {% endif %}
+{% endblock %}

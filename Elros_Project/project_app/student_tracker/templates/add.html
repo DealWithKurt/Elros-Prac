@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить студента - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>Добавить нового студента</h1>
+
+    <div class="student-card">
+        <form method="POST" action="/add">
+            <div class="form-group">
+                <label for="name">Имя студента:</label>
+                <input type="text" id="name" name="name" required 
+                       placeholder="Введите имя и фамилию"
+                       value="{{ request.form.name if request.form }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Обязательное поле. Только буквы и пробелы.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Возраст:</label>
+                <input type="number" id="age" name="age" required
+                       min="16" max="35"
+                       placeholder="Введите возраст от 16 до 35 лет"
+                       value="{{ request.form.age if request.form }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Обязательное поле. Возраст должен быть от 16 до 35 лет.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="group">Учебная группа:</label>
+                <input type="text" id="group" name="group"
+                       placeholder="Например: РПО, ГД"
+                       value="{{ request.form.group if request.form }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Необязательное поле. Укажите учебную группу.
+                </small>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn" style="background-color: #10b981;">
+                    Добавить студента
+                </button>
+                <a href="/" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3>Правила добавления:</h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: #555;">
+            <li>Имя студента - обязательное поле (только буквы и пробелы)</li>
+            <li>Возраст - обязательное поле (от 16 до 35 лет)</li>
+            <li>Учебная группа - необязательное поле</li>
+            <li>После добавления студент появится в общем списке</li>
+            <li>Все данные сохраняются автоматически</li>
+        </ul>
+    </div>
+{% endblock %}

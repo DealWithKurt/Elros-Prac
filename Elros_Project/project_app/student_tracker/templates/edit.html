@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать студента - Сайт студентов{% endblock %}
+
+{% block content %}
+    <h1>Редактировать студента</h1>
+
+    <div class="student-card">
+        <form method="POST" action="/edit/{{ student.id }}">
+            <div class="form-group">
+                <label for="name">Имя студента:</label>
+                <input type="text" id="name" name="name" required 
+                       placeholder="Введите имя и фамилию" 
+                       value="{{ student.name }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Обязательное поле. Только буквы и пробелы.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Возраст:</label>
+                <input type="number" id="age" name="age" required 
+                       min="16" max="35" 
+                       placeholder="Введите возраст от 16 до 35 лет"
+                       value="{{ student.age }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Обязательное поле. Возраст должен быть от 16 до 35 лет.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="group">Учебная группа:</label>
+                <input type="text" id="group" name="group" 
+                       placeholder="Например: РПО, ГД (необязательно)"
+                       value="{{ student.group if student.group else '' }}">
+                <small style="color: #666; display: block; margin-top: 0.3rem;">
+                    Необязательное поле. Укажите учебную группу.
+                </small>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn" style="background-color: #f59e0b;">
+                    Сохранить изменения
+                </button>
+                <a href="/" class="btn btn-secondary">Отмена</a>
+                <a href="/delete/{{ student.id }}" class="btn" 
+                   style="background-color: #ef4444;"
+                   onclick="return confirm('Вы уверены, что хотите удалить этого студента?')">
+                    Удалить
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3>Информация о студенте:</h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: #555;">
+            <li><strong>ID:</strong> {{ student.id }}</li>
+            <li><strong>Дата добавления:</strong> 
+                {% if student.created_at is string %}
+                    {{ student.created_at }}
+                {% else %}
+                    {{ student.created_at.strftime('%d.%m.%Y %H:%M') }}
+                {% endif %}
+            </li>
+            <li><strong>Последнее обновление:</strong> 
+                {% if student.updated_at %}
+                    {% if student.updated_at is string %}
+                        {{ student.updated_at }}
+                    {% else %}
+                        {{ student.updated_at.strftime('%d.%m.%Y %H:%M') }}
+                    {% endif %}
+                {% else %}
+                    Не обновлялся
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
